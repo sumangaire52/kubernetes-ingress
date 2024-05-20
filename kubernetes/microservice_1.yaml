@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice1-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: microservice1
+  template:
+    metadata:
+      labels:
+        app: microservice1
+    spec:
+      containers:
+      - name: microservice1
+        image: sumangaire96/microservice1:v1
+        ports:
+        - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: microservice1-service
+spec:
+  selector:
+    app: microservice1
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
